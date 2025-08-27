@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="ja"><head>
+	<title>支払い情報の入力</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+	<meta http-equiv="Content-Style-Type" content="text/css">
+	<meta http-equiv="Content-Script-Type" content="text/javascript">
+	<meta name="content-language" content="ja">
+	<meta name="Description" content="">
+	<meta name="Keywords" content="">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="theme-color" content="#000000">
+
+	<link href="sbpayment_common.css" rel="stylesheet">
+
+    <script type="text/javascript" async="" src="https://cdn.treasuredata.com/sdk/1.9.2/td.min.js"></script>
+    <script type="text/javascript" src="https://stbfep.sps-system.com/material/sbps_assets/js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="https://stbfep.sps-system.com/material/sbps_assets/js/sbpayment_common.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="https://stbfep.sps-system.com/material/sbps_assets_sc/js/sbpayment_credit_sc.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="https://stbfep.sps-system.com/material/common/js/common.js"></script>
+
+</head>
+
+<body>
+
+
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root">
+        <div class="App">
+            <div class="wrapper">
+				
+<header class="header"><div class="header_content"></div></header>
+
+                <div class="main">
+                <div class="main__upper">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 82 82" width="40px" height="40px">
+                      <defs>
+                        <style>
+                          .cls-1 {stroke-miterlimit: 10;}
+                          .cls-2 {stroke-linecap: round;stroke-linejoin: round;}
+                        </style>
+                      </defs>
+                      <title>entry</title>
+                      <g>
+                        <circle class="cls-1" cx="41" cy="41" r="40"></circle>
+                        <path class="cls-2" d="M49.87,29.86,57,29.81,47,19.86l0,7.08A2.9,2.9,0,0,0,49.87,29.86Z"></path>
+                        <line class="cls-2" x1="29.81" y1="35.11" x2="50.53" y2="35.11"></line>
+                        <line class="cls-2" x1="29.81" y1="41.41" x2="50.53" y2="41.41"></line>
+                        <line class="cls-2" x1="29.81" y1="47.92" x2="43.13" y2="47.92"></line>
+                        <line class="cls-2" x1="29.81" y1="54.43" x2="43.13" y2="54.43"></line>
+                        <rect class="cls-2" x="47.76" y="40.41" width="22.16" height="5.56" transform="translate(-13.31 54.26) rotate(-45)"></rect>
+                        <path class="cls-2" d="M48.93,49.25l-1.17,3.94a.87.87,0,0,0,1.08,1.08l3.94-1.17"></path>
+                        <line class="cls-2" x1="56.96" y1="29.81" x2="56.96" y2="37.71"></line>
+                        <path class="cls-2" d="M57,52.27V61a2,2,0,0,1-2,2H25.32a2,2,0,0,1-1.95-2V21.81a2,2,0,0,1,1.95-1.95H47"></path>
+                      </g>
+                    </svg>
+                    <p class="main__ttl">支払い情報を入力してください<br />Enter your payment information</p>
+                </div>
+                <div class="main__contents">
+					
+                    <div class="main__entry">
+
+                        <div class="entry-type-input">
+                            <div class="forms-ttl">
+                                <p>カード番号/Card Number</p>
+                            </div>
+                            <div class="forms-input">
+								<input class="form-input__text" type="text" name="ccNumber" size="22" value="Visa **** 1111" disabled="disabled">
+                            </div>
+                        </div>
+
+                        <div class="entry-type-error">
+                            <div class="forms-ttl errorBox"></div>
+                            <div class="forms-input errorBox">
+								<span id="ccNumber_error"></span>
+							</div>
+                        </div>
+
+                        <div class="entry-type-input typeCCYYMM">
+                            <div class="forms-ttl">
+                                <p>有効期限/Effective date</p>
+                            </div>
+                            <div class="forms-input ">
+								<p class="save-value__text">10月/2020年</p>
+                            </div>
+                        </div><!--
+                        --><div class="entry-type-input typeCCCVV2">
+                            <div class="forms-ttl">
+                                <p>セキュリティコード/CVV</p>
+                            </div>
+                            <div class="forms-input">
+								<input type="tel" name="securityCode" maxlength="3" value="" id="securityCode" class="form-input__text widthPwd" pattern="[0-9]*" placeholder="123">
+								<div class="form-tooltip tooltip" ontouchend="">？<span id="cvv2Img"></span></div>
+                            </div>
+                        </div>
+
+                        <div class="entry-type-error typeCCYYMM">
+                            <div class="forms-ttl errorBox"></div>
+                            <div class="forms-input errorBox">
+								<span id="ccExpirationYYMM_error"></span>
+                            </div>
+                        </div><!--
+                        --><div class="entry-type-error typeCCCVV2">
+                            <div class="forms-ttl errorBox"></div>
+                            <div class="forms-input errorBox">
+								<span id="securityCode_error"></span>
+                            </div>
+                        </div>
+
+							<div class="entry-type-select">
+								<div class="forms-ttl">
+									<p>支払い回数/Number of payments</p>
+								</div>
+								<div class ="forms-input typeJustify">
+									<select name="dealingsType" id="dealingsType" class="form-input__select typeHerf" onchange="dealingsTypeSelected()">
+										<option value="10">一括払い/Single</option>
+										<option value="61">分割払い/Installment</option>
+										<option value="80">リボ払い/Revolving</option>
+									</select>
+									<select name="divideTimes" id="divideTimes" class="form-input__select typeHerf">
+									    <option value=""></option>
+										<option value="3">3回/3times</option>
+										<option value="5">5回/5times</option>
+										<option value="6">6回/6times</option>
+										<option value="10">10回/10times</option>
+										<option value="12">12回/12times</option>
+										<option value="15">15回/15times</option>
+										<option value="18">18回/18times</option>
+										<option value="20">20回/20times</option>
+										<option value="24">24回/24times</option>
+									</select>
+	  							</div>
+							</div>
+							<div class="entry-type-error">
+								<div class="forms-ttl errorBox"></div>
+								<div class ="forms-input errorBox">
+									<span id="paymentType_error"></span>
+								</div>
+							</div>
+
+						<div class="entry-type-button">
+							<div class="exec-button"><a id="exec-button" href="../FepChargeIntensionConfirm.html" class="disabled">確認/Confirmation</a></div>
+							<div class="exec-button_cancel"><a href="FepChargePaymentinfoModify.html">変更/Modification</a></div>							
+
+							<div class="exec-button-sub"><a href="#" onclick="history.back()">
+									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 20" width="12px" height="20px">
+										<title>arrow</title><polyline class="cls-1" points="9 4 3 10 9 16"></polyline>
+									</svg>
+                                    戻る/Back
+							</a></div>
+
+						</div>
+                    </div>
+                </div>
+                </div>
+            </div>
+			
+<footer class="footer"></footer>
+
+        </div>
+    </div>
+</body></html>
